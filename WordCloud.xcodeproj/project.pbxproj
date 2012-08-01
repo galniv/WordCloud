@@ -1,0 +1,286 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0D2E586915C86403007D4DAD /* WCWordCloudView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D2E586815C86402007D4DAD /* WCWordCloudView.m */; };
+		0D5F793D15AF16A700EA0F64 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D5F793C15AF16A700EA0F64 /* UIKit.framework */; };
+		0D5F793F15AF16A700EA0F64 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D5F793E15AF16A700EA0F64 /* Foundation.framework */; };
+		0D5F794115AF16A700EA0F64 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D5F794015AF16A700EA0F64 /* CoreGraphics.framework */; };
+		0D5F794715AF16A700EA0F64 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0D5F794515AF16A700EA0F64 /* InfoPlist.strings */; };
+		0D5F794915AF16A700EA0F64 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D5F794815AF16A700EA0F64 /* main.m */; };
+		0D5F794D15AF16A700EA0F64 /* WCAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D5F794C15AF16A700EA0F64 /* WCAppDelegate.m */; };
+		0D5F795815AF5EB400EA0F64 /* WCWord.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D5F795715AF5EB400EA0F64 /* WCWord.m */; };
+		0DED241515B321C700BE6186 /* WCWordCloud.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DED241315B321C700BE6186 /* WCWordCloud.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0D2E586715C86402007D4DAD /* WCWordCloudView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WCWordCloudView.h; sourceTree = "<group>"; };
+		0D2E586815C86402007D4DAD /* WCWordCloudView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WCWordCloudView.m; sourceTree = "<group>"; };
+		0D5F793815AF16A700EA0F64 /* WordCloud.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WordCloud.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0D5F793C15AF16A700EA0F64 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		0D5F793E15AF16A700EA0F64 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		0D5F794015AF16A700EA0F64 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		0D5F794415AF16A700EA0F64 /* WordCloud-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "WordCloud-Info.plist"; sourceTree = "<group>"; };
+		0D5F794615AF16A700EA0F64 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		0D5F794815AF16A700EA0F64 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		0D5F794A15AF16A700EA0F64 /* WordCloud-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WordCloud-Prefix.pch"; sourceTree = "<group>"; };
+		0D5F794B15AF16A700EA0F64 /* WCAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WCAppDelegate.h; sourceTree = "<group>"; };
+		0D5F794C15AF16A700EA0F64 /* WCAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WCAppDelegate.m; sourceTree = "<group>"; };
+		0D5F795615AF5EB400EA0F64 /* WCWord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WCWord.h; sourceTree = "<group>"; };
+		0D5F795715AF5EB400EA0F64 /* WCWord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WCWord.m; sourceTree = "<group>"; };
+		0DED241215B321C700BE6186 /* WCWordCloud.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WCWordCloud.h; sourceTree = "<group>"; };
+		0DED241315B321C700BE6186 /* WCWordCloud.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WCWordCloud.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		0D5F793515AF16A700EA0F64 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0D5F793D15AF16A700EA0F64 /* UIKit.framework in Frameworks */,
+				0D5F793F15AF16A700EA0F64 /* Foundation.framework in Frameworks */,
+				0D5F794115AF16A700EA0F64 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0D5F792D15AF16A700EA0F64 = {
+			isa = PBXGroup;
+			children = (
+				0D5F794215AF16A700EA0F64 /* WordCloud */,
+				0D5F793B15AF16A700EA0F64 /* Frameworks */,
+				0D5F793915AF16A700EA0F64 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		0D5F793915AF16A700EA0F64 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0D5F793815AF16A700EA0F64 /* WordCloud.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0D5F793B15AF16A700EA0F64 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0D5F793C15AF16A700EA0F64 /* UIKit.framework */,
+				0D5F793E15AF16A700EA0F64 /* Foundation.framework */,
+				0D5F794015AF16A700EA0F64 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		0D5F794215AF16A700EA0F64 /* WordCloud */ = {
+			isa = PBXGroup;
+			children = (
+				0D5F794B15AF16A700EA0F64 /* WCAppDelegate.h */,
+				0D5F794C15AF16A700EA0F64 /* WCAppDelegate.m */,
+				0DED241215B321C700BE6186 /* WCWordCloud.h */,
+				0DED241315B321C700BE6186 /* WCWordCloud.m */,
+				0D2E586715C86402007D4DAD /* WCWordCloudView.h */,
+				0D2E586815C86402007D4DAD /* WCWordCloudView.m */,
+				0D5F795615AF5EB400EA0F64 /* WCWord.h */,
+				0D5F795715AF5EB400EA0F64 /* WCWord.m */,
+				0D5F794315AF16A700EA0F64 /* Supporting Files */,
+			);
+			path = WordCloud;
+			sourceTree = "<group>";
+		};
+		0D5F794315AF16A700EA0F64 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				0D5F794415AF16A700EA0F64 /* WordCloud-Info.plist */,
+				0D5F794515AF16A700EA0F64 /* InfoPlist.strings */,
+				0D5F794815AF16A700EA0F64 /* main.m */,
+				0D5F794A15AF16A700EA0F64 /* WordCloud-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		0D5F793715AF16A700EA0F64 /* WordCloud */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0D5F795015AF16A700EA0F64 /* Build configuration list for PBXNativeTarget "WordCloud" */;
+			buildPhases = (
+				0D5F793415AF16A700EA0F64 /* Sources */,
+				0D5F793515AF16A700EA0F64 /* Frameworks */,
+				0D5F793615AF16A700EA0F64 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = WordCloud;
+			productName = WordCloud;
+			productReference = 0D5F793815AF16A700EA0F64 /* WordCloud.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0D5F792F15AF16A700EA0F64 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+			};
+			buildConfigurationList = 0D5F793215AF16A700EA0F64 /* Build configuration list for PBXProject "WordCloud" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 0D5F792D15AF16A700EA0F64;
+			productRefGroup = 0D5F793915AF16A700EA0F64 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				0D5F793715AF16A700EA0F64 /* WordCloud */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		0D5F793615AF16A700EA0F64 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0D5F794715AF16A700EA0F64 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0D5F793415AF16A700EA0F64 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0D5F794915AF16A700EA0F64 /* main.m in Sources */,
+				0D5F794D15AF16A700EA0F64 /* WCAppDelegate.m in Sources */,
+				0D5F795815AF5EB400EA0F64 /* WCWord.m in Sources */,
+				0DED241515B321C700BE6186 /* WCWordCloud.m in Sources */,
+				0D2E586915C86403007D4DAD /* WCWordCloudView.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		0D5F794515AF16A700EA0F64 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0D5F794615AF16A700EA0F64 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		0D5F794E15AF16A700EA0F64 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		0D5F794F15AF16A700EA0F64 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		0D5F795115AF16A700EA0F64 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "WordCloud/WordCloud-Prefix.pch";
+				INFOPLIST_FILE = "WordCloud/WordCloud-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 2;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		0D5F795215AF16A700EA0F64 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "WordCloud/WordCloud-Prefix.pch";
+				INFOPLIST_FILE = "WordCloud/WordCloud-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 2;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0D5F793215AF16A700EA0F64 /* Build configuration list for PBXProject "WordCloud" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0D5F794E15AF16A700EA0F64 /* Debug */,
+				0D5F794F15AF16A700EA0F64 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0D5F795015AF16A700EA0F64 /* Build configuration list for PBXNativeTarget "WordCloud" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0D5F795115AF16A700EA0F64 /* Debug */,
+				0D5F795215AF16A700EA0F64 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0D5F792F15AF16A700EA0F64 /* Project object */;
+}
