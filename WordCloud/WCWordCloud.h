@@ -11,9 +11,9 @@
 
 @protocol WCWordCloudDelegate;
 
-@interface WCWordCloud : UIViewController <WCWordCloudViewDelegate>
+@interface WCWordCloud : NSObject
 
-@property (nonatomic, retain) id<WCWordCloudDelegate> delegate;
+@property (nonatomic, retain) id <WCWordCloudDelegate> delegate;
 
 // if specified, display only the most frequent words. default is unlimited
 @property (nonatomic) int maxNumberOfWords;
@@ -34,8 +34,19 @@
 // words will minimally have this many pixels between them. defaults to 2
 @property (nonatomic) int wordBorderSize;
 
-- (void)createWordCloud:(NSString *)wordString delimiter:(NSString *)delimiter;
-- (void)createWordCloud:(NSArray *)words;
+// the size of the word cloud
+@property (nonatomic) CGSize wordCloudSize;
+
+// add words to the cloud
+- (void)addWords:(NSString *)wordString delimiter:(NSString *)delimiter;
+- (void)addWords:(NSArray *)words;
+- (void)addWord:(NSString *)word;
+
+// regenerate the cloud using current words and settings
+- (void)generateCloud;
+
+// reset the cloud, removing all words
+- (void)resetCloud;
 
 @end
 
@@ -44,6 +55,6 @@
 
 @optional
 
-- (void)wordCloud:(WCWordCloud *)wc didTapWord:(NSString *)word atPoint:(CGPoint)point;
+- (void)wordCloudDidGenerateCloud:(WCWordCloud *)wc sortedWordArray:(NSArray *)words scalingFactor:(double)scalingFactor xShift:(double)xShift yShift:(double)yShift;
 
 @end
