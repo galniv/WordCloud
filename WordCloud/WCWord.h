@@ -12,7 +12,8 @@
 @property (nonatomic) int count;
 @property (nonatomic) CGRect bounds;
 @property (nonatomic) CGColorRef color;
-@property UIFont *font;
+@property (nonatomic, retain) UIFont *font;
+@property (nonatomic) BOOL countChaged;
 
 - (id) initWithWord:(NSString *)word count:(int)count;
 

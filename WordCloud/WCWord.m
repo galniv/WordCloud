@@ -10,7 +10,7 @@
 
 @implementation WCWord
 
-@synthesize text = _text, count = _count;
+@synthesize text = _text, count = _count, countChaged = _countChaged;
 @synthesize bounds, color, font;
 
 - (id) initWithWord:(NSString *)word count:(int)count
@@ -19,6 +19,7 @@
         _text = word;
         _count = count;
         color = [UIColor blackColor].CGColor;
+        _countChaged = TRUE;
     }
     return self;
 }
@@ -26,6 +27,13 @@
 - (void) increaseCount
 {
     _count++;
+    _countChaged = TRUE;
+}
+
+- (void)setCount:(int)count
+{
+    _count = count;
+    _countChaged = TRUE;
 }
 //
 //- (NSString *) description
