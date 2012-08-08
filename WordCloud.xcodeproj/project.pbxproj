@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0D2E586915C86403007D4DAD /* WCWordCloudView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D2E586815C86402007D4DAD /* WCWordCloudView.m */; };
+		0D37C7F915D1AC110082A0A8 /* WCWordCloudViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D37C7F815D1AC110082A0A8 /* WCWordCloudViewController.m */; };
 		0D5F793D15AF16A700EA0F64 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D5F793C15AF16A700EA0F64 /* UIKit.framework */; };
 		0D5F793F15AF16A700EA0F64 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D5F793E15AF16A700EA0F64 /* Foundation.framework */; };
 		0D5F794115AF16A700EA0F64 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D5F794015AF16A700EA0F64 /* CoreGraphics.framework */; };
@@ -21,6 +22,8 @@
 /* Begin PBXFileReference section */
 		0D2E586715C86402007D4DAD /* WCWordCloudView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WCWordCloudView.h; sourceTree = "<group>"; };
 		0D2E586815C86402007D4DAD /* WCWordCloudView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WCWordCloudView.m; sourceTree = "<group>"; };
+		0D37C7F715D1AC110082A0A8 /* WCWordCloudViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WCWordCloudViewController.h; sourceTree = "<group>"; };
+		0D37C7F815D1AC110082A0A8 /* WCWordCloudViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WCWordCloudViewController.m; sourceTree = "<group>"; };
 		0D5F793815AF16A700EA0F64 /* WordCloud.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WordCloud.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D5F793C15AF16A700EA0F64 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		0D5F793E15AF16A700EA0F64 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -83,6 +86,8 @@
 			children = (
 				0D5F794B15AF16A700EA0F64 /* WCAppDelegate.h */,
 				0D5F794C15AF16A700EA0F64 /* WCAppDelegate.m */,
+				0D37C7F715D1AC110082A0A8 /* WCWordCloudViewController.h */,
+				0D37C7F815D1AC110082A0A8 /* WCWordCloudViewController.m */,
 				0DED241215B321C700BE6186 /* WCWordCloud.h */,
 				0DED241315B321C700BE6186 /* WCWordCloud.m */,
 				0D2E586715C86402007D4DAD /* WCWordCloudView.h */,
@@ -171,6 +176,7 @@
 				0D5F795815AF5EB400EA0F64 /* WCWord.m in Sources */,
 				0DED241515B321C700BE6186 /* WCWordCloud.m in Sources */,
 				0D2E586915C86403007D4DAD /* WCWordCloudView.m in Sources */,
+				0D37C7F915D1AC110082A0A8 /* WCWordCloudViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
