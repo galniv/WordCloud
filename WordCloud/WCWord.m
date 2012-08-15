@@ -10,30 +10,42 @@
 
 @implementation WCWord
 
-@synthesize text = _text, count = _count, countChaged = _countChaged;
-@synthesize bounds, color, font;
+@synthesize text = _text;
+@synthesize count = _count;
+@synthesize countChanged = _countChanged;
+@synthesize bounds = _bounds;
+@synthesize color = _color;
+@synthesize font = _font;
 
-- (id) initWithWord:(NSString *)word count:(int)count
+- (id) initWithWord:(NSString*)word count:(int)count
 {
-    if (self = [super init]) {
+    if (self = [super init])
+    {
         _text = word;
         _count = count;
-        color = [UIColor blackColor].CGColor;
-        _countChaged = TRUE;
+        _color = [UIColor blackColor];
+        _countChanged = TRUE;
     }
     return self;
+}
+
+- (void) dealloc
+{
+    _text = nil;
+    _color = nil;
+    _font = nil;
 }
 
 - (void) increaseCount
 {
     _count++;
-    _countChaged = TRUE;
+    _countChanged = TRUE;
 }
 
 - (void)setCount:(int)count
 {
     _count = count;
-    _countChaged = TRUE;
+    _countChanged = TRUE;
 }
 //
 //- (NSString *) description

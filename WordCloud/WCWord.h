@@ -8,14 +8,14 @@
 
 @interface WCWord : NSObject
 
-@property (nonatomic, retain) NSString *text;
-@property (nonatomic) int count;
+@property (nonatomic, retain, readonly) NSString* text;
+@property (nonatomic, readonly) int count;
 @property (nonatomic) CGRect bounds;
-@property (nonatomic) CGColorRef color;
-@property (nonatomic, retain) UIFont *font;
-@property (nonatomic) BOOL countChaged;
+@property (nonatomic, retain) UIColor* color;
+@property (nonatomic, retain) UIFont* font;
+@property (nonatomic) BOOL countChanged;
 
-- (id) initWithWord:(NSString *)word count:(int)count;
+- (id) initWithWord:(NSString*)word count:(int)count;
 
 - (void) increaseCount;
 

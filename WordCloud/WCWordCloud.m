@@ -23,7 +23,7 @@
     BOOL highestWordCountChanged;
     BOOL wordsNeedSorting;
     
-    NSCharacterSet *nonLetterCharacterSet;
+    NSCharacterSet* nonLetterCharacterSet;
 }
 
 - (CGColorRef)CGColorRefFromUIColor:(UIColor*)newColor;
@@ -33,6 +33,7 @@
 
 @implementation WCWordCloud
 
+@synthesize delegate = _delegate;
 @synthesize maxNumberOfWords, minFontSize, maxFontSize, font, minimumWordLength, wordBorderSize, wordCloudSize;
 @synthesize lowCountColor = _lowCountColor;
 @synthesize highCountColor = _highCountColor;
@@ -69,7 +70,18 @@
 
 - (void)dealloc
 {
+    _delegate = nil;
+    
     font = nil;
+    
+    sortedWords = nil;
+    wordCounts = nil;
+    
+    lowCountColorComponents = nil;
+    highCountColorComponents = nil;
+    
+    nonLetterCharacterSet = nil;
+    
     _lowCountColor = nil;
     _highCountColor = nil;
 }
@@ -85,42 +97,41 @@
     [sortedWords removeAllObjects];
 }
 
-- (void)addWords:(NSString *)wordString delimiter:(NSString *)delimiter
+- (void) addWords:(NSString*) wordString delimiter:(NSString*)delimiter
 {
+    if (!wordString.length) return;
     [self addWords:[wordString componentsSeparatedByString:delimiter]];
 }
 
-- (void)addWords:(NSArray *)words
+- (void) addWords:(NSArray*)words
 {
-    if (!words || words.count == 0) return;
+    if (!words.count) return;
     
     // count the number of occurences of each word
-    for (NSString __strong *word in words)
+    for (NSString* word in words)
     {
         // trim non-letter characters and convert to lower case
-        word = [[word stringByTrimmingCharactersInSet:nonLetterCharacterSet] lowercaseString];
-        
+        NSString* cleanWord = [[word stringByTrimmingCharactersInSet:nonLetterCharacterSet] lowercaseString];
         // ignore all words shorter than the minimum word length
-        if (word.length > minimumWordLength) {
-            [self countWord:word];
-        }
+        if (cleanWord.length > minimumWordLength) [self countWord:cleanWord];
     }
     
     wordsNeedSorting = TRUE;
     [self generateCloud];
 }
 
-- (void)addWord:(NSString *)word
+- (void) addWord:(NSString*)word
 {
+    if (!word.length) return;
     [self countWord:[[word stringByTrimmingCharactersInSet:nonLetterCharacterSet] lowercaseString]];
     wordsNeedSorting = TRUE;
     [self generateCloud];
 }
 
 // private
-- (void)countWord:(NSString *)word
+- (void) countWord:(NSString*)word
 {
-    if (!word) return;
+    if (!word.length) return;
     
     if ([wordCounts objectForKey:word] == nil) {
         [wordCounts setValue:[[WCWord alloc] initWithWord:word count:1] forKey:word];
@@ -144,7 +155,7 @@
 // sorts words if needed, and lays them out
 - (void)generateCloud
 {
-    if (wordCounts.count == 0) return;
+    if (!wordCounts.count) return;
     
     if (wordsNeedSorting) {
         // sort by number of occurences
@@ -190,7 +201,7 @@
         
         // only recalculate the word's size if its count has changed, or if the highest count has increased
         // (thus increasing the size per occurance)
-        if (word.countChaged || highestWordCountChanged) {
+        if (word.countChanged || highestWordCountChanged) {
             word.font = [font fontWithSize:minFontSize + (fontSizePerOccurance * word.count)];
             wordSize = [word.text sizeWithFont:word.font];
             wordSize.height += wordBorderSize * 2;
@@ -199,9 +210,9 @@
             word.color = [UIColor colorWithRed:lowCountColorComponents[0] + (rColorPerOccurance * word.count)
                                          green:lowCountColorComponents[1] + (gColorPerOccurance * word.count)
                                           blue:lowCountColorComponents[2] + (bColorPerOccurance * word.count)
-                                         alpha:lowCountColorComponents[3] + (aColorPerOccurance * word.count)].CGColor;
+                                         alpha:lowCountColorComponents[3] + (aColorPerOccurance * word.count)];
             
-            word.countChaged = FALSE;
+            word.countChanged = FALSE;
         }
         
         word.bounds = CGRectMake(arc4random_uniform(10) + (wordCloudSize.width / 2), arc4random_uniform(10) + (wordCloudSize.height / 2), wordSize.width, wordSize.height);

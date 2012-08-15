@@ -18,6 +18,7 @@
 
 @implementation WCWordCloudView
 
+@synthesize delegate = _delegate;
 @synthesize words = _words;
 @synthesize scalingFactor = _scalingFactor;
 @synthesize xShift = _xShift;
@@ -40,6 +41,14 @@
     }
     
     return self;
+}
+
+- (void) dealloc
+{
+    _delegate = nil;
+    _words = nil;
+    
+    lastTouchedWord = nil;    
 }
 
 - (void)setWords:(NSArray *)wordArray
@@ -81,7 +90,7 @@
     
     for (WCWord *word in _words) {
         CGContextSelectFont(c, [word.font.fontName cStringUsingEncoding:NSASCIIStringEncoding], word.font.pointSize * _scalingFactor, kCGEncodingMacRoman);
-        CGContextSetFillColorWithColor(c, word.color);
+        CGContextSetFillColorWithColor(c, word.color.CGColor);
         CGContextShowTextAtPoint(c, word.bounds.origin.x * _scalingFactor + _xShift, word.bounds.origin.y * _scalingFactor + _yShift, [word.text cStringUsingEncoding:NSASCIIStringEncoding], word.text.length);
     }
 }
