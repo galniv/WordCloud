@@ -10,12 +10,14 @@
 
 @interface WCWordCloud ()
 {
-    NSMutableArray *sortedWords;
+    NSMutableArray* sortedWords;
+    /*
     double scalingFactor;
     double xShift;
     double yShift;
+    */
     
-    NSMutableDictionary *wordCounts;
+    NSMutableDictionary* wordCounts;
     CGFloat* lowCountColorComponents;
     CGFloat* highCountColorComponents;
     
@@ -33,30 +35,32 @@
 
 @implementation WCWordCloud
 
-@synthesize delegate = _delegate;
-@synthesize maxNumberOfWords, minFontSize, maxFontSize, font, minimumWordLength, wordBorderSize, wordCloudSize;
-@synthesize lowCountColor = _lowCountColor;
-@synthesize highCountColor = _highCountColor;
+//@synthesize delegate = _delegate;
+//@synthesize maxNumberOfWords, minFontSize, maxFontSize, font, minimumWordLength, wordBorderSize, wordCloudSize;
+//@synthesize lowCountColor = _lowCountColor;
+//@synthesize highCountColor = _highCountColor;
 
 - (id)init
 {
-    if (self = [super init]) {
+    if (self = [super init])
+    {
         // defaults
-        maxNumberOfWords = 0;
-        minimumWordLength = 3;
+        _maxNumberOfWords = 0;
+        _minimumWordLength = 3;
         
-        minFontSize = 10;
-        maxFontSize = 100;
-        font = [UIFont systemFontOfSize:minFontSize];
+        _minFontSize = 10;
+        _maxFontSize = 100;
+        _font = [UIFont systemFontOfSize:self.minFontSize];
         
         self.lowCountColor = [UIColor blackColor];
         self.highCountColor = [UIColor blackColor];
         
-        scalingFactor = 1;
-        xShift = 0;
-        yShift = 0;
+        _wordCloudSize = CGSizeZero;
+        //scalingFactor = 1;
+        //xShift = 0;
+        //yShift = 0;
         
-        wordBorderSize = 2;
+        _wordBorderSize = 2;
         highestWordCount = 0;
         
         wordsNeedSorting = FALSE;
@@ -68,11 +72,11 @@
     return self;
 }
 
-- (void)dealloc
+- (void) dealloc
 {
     _delegate = nil;
     
-    font = nil;
+    _font = nil;
     
     sortedWords = nil;
     wordCounts = nil;
@@ -113,7 +117,7 @@
         // trim non-letter characters and convert to lower case
         NSString* cleanWord = [[word stringByTrimmingCharactersInSet:nonLetterCharacterSet] lowercaseString];
         // ignore all words shorter than the minimum word length
-        if (cleanWord.length > minimumWordLength) [self countWord:cleanWord];
+        if (cleanWord.length > self.minimumWordLength) [self countWord:cleanWord];
     }
     
     wordsNeedSorting = TRUE;
@@ -153,19 +157,23 @@
 }
 
 // sorts words if needed, and lays them out
-- (void)generateCloud
+- (void) generateCloud
 {
+    double scalingFactor;
+    double xShift;
+    double yShift;
+    
     if (!wordCounts.count) return;
+    if (true == CGSizeEqualToSize(self.wordCloudSize, CGSizeZero)) return;
     
     if (wordsNeedSorting) {
+        wordsNeedSorting = FALSE;
         // sort by number of occurences
         sortedWords = [NSMutableArray arrayWithArray:[[wordCounts allValues] sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"count" ascending:FALSE]]]];
-        
-        wordsNeedSorting = FALSE;
     }
     
     // normalize font sizes based on the word with the highest number of occurances
-    float fontSizePerOccurance = (maxFontSize - minFontSize) / highestWordCount;
+    float fontSizePerOccurance = (self.maxFontSize - self.minFontSize) / highestWordCount;
 
     // prepare colors for interpolation
     float rColorPerOccurance = (highCountColorComponents[0] - lowCountColorComponents[0]) / highestWordCount;
@@ -173,40 +181,38 @@
     float bColorPerOccurance = (highCountColorComponents[2] - lowCountColorComponents[2]) / highestWordCount;
     float aColorPerOccurance = (highCountColorComponents[3] - lowCountColorComponents[3]) / highestWordCount;
 
-    WCWord *word;
-    CGSize wordSize;
+    //WCWord *word;
+    //CGSize wordSize;
 
     double step = 2;
-    double aspectRatio = wordCloudSize.width / wordCloudSize.height;
-    double angle, radius, angleStep;
-    int xPos, yPos, horizCenter, vertCenter;
+    double aspectRatio = self.wordCloudSize.width / self.wordCloudSize.height;
+    //double angle, radius, angleStep;
+
 
     // statistics for later calculation of scaling factor
     int minX = INT_MAX;
     int maxX = INT_MIN;
     int minY = INT_MAX;
     int maxY = INT_MIN;
+    int wordLimit = (self.maxNumberOfWords > 0 ? self.maxNumberOfWords : sortedWords.count);
 
-    int alreadyPlacedWordIdx;
-    BOOL intersects = FALSE;
-
-    int wordLimit = (maxNumberOfWords > 0 ? maxNumberOfWords : sortedWords.count);
-
-    for (int i = 0; i < wordLimit; i++) {
-        angle = 10 * random();
-        radius = 0;
-        angleStep = (i % 2 == 0 ? 1 : -1) * step;
+    for (int i = 0; i < wordLimit; i++)
+    {
+        //int xPos, yPos, horizCenter, vertCenter;
+        //int alreadyPlacedWordIdx;
+        BOOL intersects = FALSE;
         
-        word = [sortedWords objectAtIndex:i];
+        double angle = 10 * random();
+        double radius = 0;
+        double angleStep = (i % 2 == 0 ? 1 : -1) * step;
+        
+        WCWord* word = [sortedWords objectAtIndex:i];
         
         // only recalculate the word's size if its count has changed, or if the highest count has increased
         // (thus increasing the size per occurance)
         if (word.countChanged || highestWordCountChanged) {
-            word.font = [font fontWithSize:minFontSize + (fontSizePerOccurance * word.count)];
-            wordSize = [word.text sizeWithFont:word.font];
-            wordSize.height += wordBorderSize * 2;
-            wordSize.width += wordBorderSize * 2;
-            
+            word.font = [self.font fontWithSize:self.minFontSize + (fontSizePerOccurance * word.count)];
+                        
             word.color = [UIColor colorWithRed:lowCountColorComponents[0] + (rColorPerOccurance * word.count)
                                          green:lowCountColorComponents[1] + (gColorPerOccurance * word.count)
                                           blue:lowCountColorComponents[2] + (bColorPerOccurance * word.count)
@@ -215,15 +221,19 @@
             word.countChanged = FALSE;
         }
         
-        word.bounds = CGRectMake(arc4random_uniform(10) + (wordCloudSize.width / 2), arc4random_uniform(10) + (wordCloudSize.height / 2), wordSize.width, wordSize.height);
+        CGSize wordSize = [word.text sizeWithFont:word.font];
+        wordSize.height += self.wordBorderSize * 2;
+        wordSize.width += self.wordBorderSize * 2;
         
-        horizCenter = (wordCloudSize.width / 2) - (wordSize.width / 2);
-        vertCenter = (wordCloudSize.height / 2) - (wordSize.height / 2);
+        word.bounds = CGRectMake(arc4random_uniform(10) + (self.wordCloudSize.width / 2), arc4random_uniform(10) + (self.wordCloudSize.height / 2), wordSize.width, wordSize.height);
+        
+        int horizCenter = (self.wordCloudSize.width / 2) - (wordSize.width / 2);
+        int vertCenter = (self.wordCloudSize.height / 2) - (wordSize.height / 2);
         
         // move word until there are no collisions with previously placed words
         // adapted from https://github.com/lucaong/jQCloud
         do {
-            for (alreadyPlacedWordIdx = 0; alreadyPlacedWordIdx <= i - 1; alreadyPlacedWordIdx++) {
+            for (int alreadyPlacedWordIdx = 0; alreadyPlacedWordIdx <= i - 1; alreadyPlacedWordIdx++) {
                 intersects = CGRectIntersectsRect(word.bounds, ((WCWord *)[sortedWords objectAtIndex:(alreadyPlacedWordIdx)]).bounds);
                 
                 // if the current word intersects with word that has already been placed, move the current word, and
@@ -232,8 +242,8 @@
                     radius += step;
                     angle += angleStep;
                     
-                    xPos = horizCenter + (radius * cos(angle)) * aspectRatio;
-                    yPos = vertCenter + radius * sin(angle);
+                    int xPos = horizCenter + (radius * cos(angle)) * aspectRatio;
+                    int yPos = vertCenter + radius * sin(angle);
                     
                     word.bounds = CGRectMake(xPos, yPos, wordSize.width, wordSize.height);
                     
@@ -254,17 +264,17 @@
     scalingFactor = 1;
 
     // scale down if necessary
-    if (maxX - minX > wordCloudSize.width) {
-        scalingFactor = wordCloudSize.width / (double)(maxX - minX);
+    if (maxX - minX > self.wordCloudSize.width) {
+        scalingFactor = self.wordCloudSize.width / (double)(maxX - minX);
         
         // if we are here, then words are larger than the view, and either minX is negative or maxX is larger than the width.
         // calculate the amount by which to shift all words so that they fit in the view.
         if (minX < 0) xShift = minX * scalingFactor * -1;
-        else xShift = (wordCloudSize.width - maxX) * scalingFactor;
+        else xShift = (self.wordCloudSize.width - maxX) * scalingFactor;
     }
     
-    if (maxY - minY > wordCloudSize.height) {
-        double newScalingFactor = wordCloudSize.height / (double)(maxY - minY);
+    if (maxY - minY > self.wordCloudSize.height) {
+        double newScalingFactor = self.wordCloudSize.height / (double)(maxY - minY);
         
         // if we've already scaled down in the X dimension, only apply the new scale if it is smaller
         if (scalingFactor < 1 && newScalingFactor < scalingFactor) {
@@ -274,7 +284,7 @@
         // if we are here, then words are larger than the view, and either minX is negative or maxX is larger than the width.
         // calculate the amount by which to shift all words so that they fit in the view.
         if (minY < 0) yShift = minY * scalingFactor * -1;
-        else yShift = (wordCloudSize.height - maxY) * scalingFactor;
+        else yShift = (self.wordCloudSize.height - maxY) * scalingFactor;
     }
     
     if ([self.delegate respondsToSelector:@selector(wordCloudDidGenerateCloud:sortedWordArray:scalingFactor:xShift:yShift:)]) {
@@ -293,20 +303,20 @@
 }
 
 // accessors
-- (void)setLowCountColor:(UIColor *)color
+- (void) setLowCountColor:(UIColor*)color
 {
     _lowCountColor = color;
     
-    lowCountColorComponents = (CGFloat *)CGColorGetComponents([self CGColorRefFromUIColor:_lowCountColor]);
-    lowCountColorComponents[3] = CGColorGetAlpha(_lowCountColor.CGColor);
+    lowCountColorComponents = (CGFloat*)CGColorGetComponents([self CGColorRefFromUIColor:color]);
+    lowCountColorComponents[3] = CGColorGetAlpha(color.CGColor);
 }
 
-- (void)setHighCountColor:(UIColor *)color
+- (void) setHighCountColor:(UIColor*)color
 {
     _highCountColor = color;
     
-    highCountColorComponents = (CGFloat *)CGColorGetComponents([self CGColorRefFromUIColor:_highCountColor]);
-    highCountColorComponents[3] = CGColorGetAlpha(_highCountColor.CGColor);
+    highCountColorComponents = (CGFloat*)CGColorGetComponents([self CGColorRefFromUIColor:color]);
+    highCountColorComponents[3] = CGColorGetAlpha(color.CGColor);
 }
 
 @end

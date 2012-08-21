@@ -7,7 +7,6 @@
 //
 
 #import "WCWord.h"
-#import "WCWordCloudView.h"
 
 @protocol WCWordCloudDelegate;
 
