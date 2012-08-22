@@ -231,7 +231,7 @@
     int maxY = INT_MIN;
     
     int wordLimit = self.maxNumberOfWords ? self.maxNumberOfWords : sortedWords.count;    
-    for (int index = 0; index < wordLimit; index++)
+    for (int index=0; index < wordLimit; index++)
     {
         WCWord* word = [sortedWords objectAtIndex:index];
         
@@ -252,24 +252,22 @@
         wordSize.height += self.wordBorderSize * 2;
         wordSize.width += self.wordBorderSize * 2;
         
-        word.bounds = CGRectMake(arc4random_uniform(10) + (self.cloudSize.width / 2), arc4random_uniform(10) + (self.cloudSize.height / 2), wordSize.width, wordSize.height);
+        float horizCenter = (self.cloudSize.width - wordSize.width)/2;
+        float vertCenter = (self.cloudSize.height - wordSize.height)/2;
+        
+        word.bounds = CGRectMake(arc4random_uniform(10) + horizCenter, arc4random_uniform(10) + vertCenter, wordSize.width, wordSize.height);
         
         BOOL intersects = FALSE;
-        
-        double angle = 10 * random();
-        double radius = 0;
         double angleStep = (index % 2 == 0 ? 1 : -1) * step;
-        
-        int horizCenter = (self.cloudSize.width / 2) - (wordSize.width / 2);
-        int vertCenter = (self.cloudSize.height / 2) - (wordSize.height / 2);
-        
+        double radius = 0;
+        double angle = 10 * random();
         // move word until there are no collisions with previously placed words
         // adapted from https://github.com/lucaong/jQCloud
         do
         {
-            for (int alreadyPlacedWordIdx = 0; alreadyPlacedWordIdx <= index - 1; alreadyPlacedWordIdx++)
+            for (int otherIndex=0; otherIndex < index; otherIndex++)
             {
-                intersects = CGRectIntersectsRect(word.bounds, ((WCWord *)[sortedWords objectAtIndex:(alreadyPlacedWordIdx)]).bounds);
+                intersects = CGRectIntersectsRect(word.bounds, ((WCWord*)[sortedWords objectAtIndex:otherIndex]).bounds);
                 
                 // if the current word intersects with word that has already been placed, move the current word, and
                 // recheck against all already-placed words

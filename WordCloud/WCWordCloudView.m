@@ -6,6 +6,8 @@
 //
 //
 
+#import <QuartzCore/QuartzCore.h>
+
 #import "WCWordCloudView.h"
 
 @interface WCWordCloudView () <WCWordCloudDelegate>
@@ -25,6 +27,9 @@
 
 - (void) baseInit
 {
+    self.layer.masksToBounds = TRUE;
+    self.layer.shouldRasterize = YES; // test
+    
     self.backgroundColor = [UIColor clearColor];
     _scalingFactor = 1;
     
