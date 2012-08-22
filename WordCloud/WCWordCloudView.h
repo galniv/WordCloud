@@ -6,7 +6,6 @@
 //
 //
 
-//#import "WCWord.h"
 #import "WCWordCloud.h"
 
 @protocol WCWordCloudViewDelegate;
@@ -16,16 +15,9 @@
 @property (nonatomic, retain) id<WCWordCloudViewDelegate> delegate;
 @property (nonatomic, readonly) WCWordCloud* cloud;
 
-//@property (nonatomic, retain) NSArray* words;
-//@property (nonatomic) double scalingFactor;
-//@property (nonatomic) double xShift;
-//@property (nonatomic) double yShift;
-
 - (CGSize) sizeThatFitsWidth:(float)width;
 
 @end
-
-
 
 @protocol WCWordCloudViewDelegate <NSObject>
 

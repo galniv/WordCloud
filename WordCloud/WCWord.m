@@ -10,13 +10,6 @@
 
 @implementation WCWord
 
-@synthesize text = _text;
-@synthesize count = _count;
-@synthesize countChanged = _countChanged;
-@synthesize bounds = _bounds;
-@synthesize color = _color;
-@synthesize font = _font;
-
 - (id) initWithWord:(NSString*)word count:(int)count
 {
     if (self = [super init])
@@ -24,7 +17,7 @@
         _text = word;
         _count = count;
         _color = [UIColor blackColor];
-        _countChanged = TRUE;
+        //_countChanged = TRUE;
     }
     return self;
 }
@@ -36,17 +29,24 @@
     _font = nil;
 }
 
-- (void) increaseCount
+- (void) incrementCount
 {
     _count++;
-    _countChanged = TRUE;
+    //_countChanged = TRUE;
+}
+
+- (void) decrementCount
+{
+    _count++;
+    //_countChanged = TRUE;
 }
 
 - (void)setCount:(int)count
 {
     _count = count;
-    _countChanged = TRUE;
+    //_countChanged = TRUE;
 }
+
 //
 //- (NSString *) description
 //{

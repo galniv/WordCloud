@@ -23,13 +23,6 @@
 
 @implementation WCWordCloudView
 
-//@synthesize delegate = _delegate;
-//@synthesize cloud = _cloud;
-//@synthesize words = _words;
-//@synthesize scalingFactor = _scalingFactor;
-//@synthesize xShift = _xShift;
-//@synthesize yShift = _yShift;
-
 - (void) baseInit
 {
     self.backgroundColor = [UIColor clearColor];
@@ -73,9 +66,8 @@
 {
     [super layoutSubviews];
     
-    if (true == CGSizeEqualToSize(self.frame.size, self.cloud.wordCloudSize)) return;
-    self.cloud.wordCloudSize = self.frame.size;
-    [self.cloud generateCloud];
+    if (true == CGSizeEqualToSize(self.frame.size, self.cloud.cloudSize)) return;
+    self.cloud.cloudSize = self.frame.size;
 }
 
 #pragma mark - WCWordCloudDelegate
@@ -98,32 +90,6 @@
 }
 
 #pragma mark - private
-
-/*
-- (void)setWords:(NSArray *)wordArray
-{
-    _words = wordArray;
-    [self setNeedsDisplay];
-}
-
-- (void)setScalingFactor:(double)scalingFactor
-{
-    _scalingFactor = scalingFactor;
-    [self setNeedsDisplay];
-}
-
-- (void)setXShift:(double)xShift
-{
-    _xShift = xShift;
-    [self setNeedsDisplay];
-}
-
-- (void)setYShift:(double)yShift
-{
-    _yShift = yShift;
-    [self setNeedsDisplay];
-}
-*/
 
 - (void)drawRect:(CGRect)rect
 {
@@ -157,7 +123,7 @@
 
 // if the point is contained within the bounds of a word, save the point and the relevant word.
 // otherwise, return nil to indicate that the point is not contained within this view.
-- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
+- (UIView*) hitTest:(CGPoint)point withEvent:(UIEvent *)event
 {
     for (WCWord* word in self.words)
     {

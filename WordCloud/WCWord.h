@@ -13,10 +13,11 @@
 @property (nonatomic) CGRect bounds;
 @property (nonatomic, retain) UIColor* color;
 @property (nonatomic, retain) UIFont* font;
-@property (nonatomic) BOOL countChanged;
+//@property (nonatomic) BOOL countChanged;
 
 - (id) initWithWord:(NSString*)word count:(int)count;
 
-- (void) increaseCount;
+- (void) incrementCount;
+- (void) decrementCount;
 
 @end
