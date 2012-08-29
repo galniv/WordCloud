@@ -15,8 +15,6 @@
 @property (nonatomic, retain) id<WCWordCloudViewDelegate> delegate;
 @property (nonatomic, readonly) WCWordCloud* cloud;
 
-- (CGSize) sizeThatFitsWidth:(float)width;
-
 @end
 
 @protocol WCWordCloudViewDelegate <NSObject>

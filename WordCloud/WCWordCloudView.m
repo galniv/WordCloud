@@ -27,8 +27,8 @@
 
 - (void) baseInit
 {
-    self.layer.masksToBounds = TRUE;
-    self.layer.shouldRasterize = YES; // test
+    //self.layer.masksToBounds = TRUE;
+    //self.layer.shouldRasterize = YES; // test
     
     self.backgroundColor = [UIColor clearColor];
     _scalingFactor = 1;
@@ -85,13 +85,6 @@
     _yShift = yShift;
     
     [self setNeedsDisplay];
-}
-
-#pragma mark - public
-
-- (CGSize) sizeThatFitsWidth:(float)width
-{
-    return CGSizeMake(0.75*width, 0.45*width);
 }
 
 #pragma mark - private
