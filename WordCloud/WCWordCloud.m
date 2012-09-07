@@ -14,8 +14,8 @@
     NSMutableDictionary* wordCounts;
     WCWord* topWord;
     
-    CGFloat* lowCountColorComponents;
-    CGFloat* highCountColorComponents;
+    CGFloat lowCountColorComponents[4];
+    CGFloat highCountColorComponents[4];
     
     //NSCharacterSet* nonLetterCharacterSet;
 }
@@ -25,7 +25,7 @@
 - (void) setNeedsGenerateCloud;
 - (void) generateCloud;
 
-- (CGColorRef) CGColorRefFromUIColor:(UIColor*)newColor;
+- (CGColorRef) CGColorRefFromUIColor:(UIColor*)color CF_RETURNS_RETAINED;
 
 @end
 
@@ -69,8 +69,8 @@
     wordCounts = nil;
     topWord = nil;
     
-    lowCountColorComponents = nil;
-    highCountColorComponents = nil;
+    //delete(lowCountColorComponents);
+    //delete(highCountColorComponents);
     
     //nonLetterCharacterSet = nil;
 }
@@ -371,9 +371,15 @@
 {
     if (color == self.lowCountColor) return;
     _lowCountColor = color;
-    
-    lowCountColorComponents = (CGFloat*)CGColorGetComponents([self CGColorRefFromUIColor:color]);
+        
+    CGColorRef colorRef = [self CGColorRefFromUIColor:color];
+    const CGFloat* components = CGColorGetComponents(colorRef);
+    lowCountColorComponents[0] = components[0];
+    lowCountColorComponents[1] = components[1];
+    lowCountColorComponents[2] = components[2];
     lowCountColorComponents[3] = CGColorGetAlpha(color.CGColor);
+    CGColorRelease(colorRef);
+    
     [self setNeedsGenerateCloud];
 }
 
@@ -381,9 +387,15 @@
 {
     if (color == self.highCountColor) return;
     _highCountColor = color;
-    
-    highCountColorComponents = (CGFloat*)CGColorGetComponents([self CGColorRefFromUIColor:color]);
+        
+    CGColorRef colorRef = [self CGColorRefFromUIColor:color];
+    const CGFloat* components = CGColorGetComponents(colorRef);
+    highCountColorComponents[0] = components[0];
+    highCountColorComponents[1] = components[1];
+    highCountColorComponents[2] = components[2];
     highCountColorComponents[3] = CGColorGetAlpha(color.CGColor);
+    CGColorRelease(colorRef);
+    
     [self setNeedsGenerateCloud];
 }
 
@@ -409,12 +421,14 @@
 
 // hack to get the correct CGColors from ANY UIColor, even in a non-RGB color space (greyscale, etc)
 // borrowed from http://stackoverflow.com/questions/4155642/how-to-get-color-components-of-a-cgcolor-correctly
-- (CGColorRef)CGColorRefFromUIColor:(UIColor*)newColor
+- (CGColorRef) CGColorRefFromUIColor:(UIColor*)color
 {
     CGFloat components[4] = {0.0, 0.0, 0.0, 0.0};
-    [newColor getRed:&components[0] green:&components[1] blue:&components[2] alpha:&components[3]];
-    CGColorRef newRGB = CGColorCreate(CGColorSpaceCreateDeviceRGB(), components);
-    return newRGB;
+    [color getRed:&components[0] green:&components[1] blue:&components[2] alpha:&components[3]];
+    CGColorSpaceRef colorSpaceRef = CGColorSpaceCreateDeviceRGB();
+    CGColorRef colorRef = CGColorCreate(colorSpaceRef, components);    
+    CGColorSpaceRelease(colorSpaceRef);
+    return colorRef;
 }
 
 @end
