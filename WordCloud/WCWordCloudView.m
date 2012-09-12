@@ -57,11 +57,8 @@
 
 - (void) dealloc
 {
-    _cloud = nil;
-    
-    _delegate = nil;
-    _words = nil;
-    
+    _cloud = nil;    
+    _words = nil;    
     lastTouchedWord = nil;    
 }
 

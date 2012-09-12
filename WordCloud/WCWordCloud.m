@@ -58,8 +58,6 @@
 
 - (void) dealloc
 {
-    _delegate = nil;
-    
     _font = nil;
     
     _lowCountColor = nil;

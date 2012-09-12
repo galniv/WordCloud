@@ -12,7 +12,7 @@
 
 @interface WCWordCloud : NSObject
 
-@property (nonatomic, retain) id <WCWordCloudDelegate> delegate;
+@property (nonatomic, weak) id <WCWordCloudDelegate> delegate;
 
 // if specified, display only the most frequent words. default is unlimited
 @property (nonatomic) int maxNumberOfWords;
