@@ -12,8 +12,8 @@
 
 @interface WCWordCloudView () <WCWordCloudDelegate>
 {
-    WCWord* lastTouchedWord;
-    CGPoint lastTouchedPoint;
+    NSMutableDictionary* wordRects;    
+    NSString* lastTouchedWord;
 }
 
 @property (nonatomic, retain, readonly) NSArray* words;
@@ -58,8 +58,10 @@
 - (void) dealloc
 {
     _cloud = nil;    
-    _words = nil;    
-    lastTouchedWord = nil;    
+    _words = nil;
+    
+    lastTouchedWord = nil;
+    wordRects = nil;
 }
 
 #pragma mark - view lifecycle
@@ -81,12 +83,22 @@
     _xShift = xShift;
     _yShift = yShift;
     
+    wordRects = [[NSMutableDictionary alloc] initWithCapacity:self.words.count];
+    for (WCWord* word in self.words)
+    {
+        float w = word.bounds.size.width * self.scalingFactor;
+        float h = word.bounds.size.height * self.scalingFactor;
+        float x = self.xShift + word.bounds.origin.x * self.scalingFactor;
+        float y =  self.bounds.size.height - (self.yShift + word.bounds.origin.y * self.scalingFactor) - h;
+        [wordRects setObject:[NSValue valueWithCGRect:CGRectMake(x, y, w, h)] forKey:word.text];
+    }
+    
     [self setNeedsDisplay];
 }
 
 #pragma mark - private
 
-- (void)drawRect:(CGRect)rect
+- (void) drawRect:(CGRect)rect
 {
     CGContextRef c = UIGraphicsGetCurrentContext();
     
@@ -103,28 +115,29 @@
     {
         CGContextSelectFont(c, [word.font.fontName cStringUsingEncoding:NSASCIIStringEncoding], word.font.pointSize * self.scalingFactor, kCGEncodingMacRoman);
         CGContextSetFillColorWithColor(c, word.color.CGColor);
-        CGContextShowTextAtPoint(c, word.bounds.origin.x * self.scalingFactor + self.xShift, word.bounds.origin.y * self.scalingFactor + self.yShift, [word.text cStringUsingEncoding:NSASCIIStringEncoding], word.text.length);
+        CGContextShowTextAtPoint(c, self.xShift + word.bounds.origin.x * self.scalingFactor, self.yShift + word.bounds.origin.y * self.scalingFactor, [word.text cStringUsingEncoding:NSASCIIStringEncoding], word.text.length);
     }
 }
 
 // the hitTest selector below ensures that this will only be called when a word has been tapped
-- (void) touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+- (void) touchesEnded:(NSSet*)touches withEvent:(UIEvent*)event
 {
-    if ([self.delegate respondsToSelector:@selector(wordCloudView:didTapWord:atPoint:)])
+    if ([self.delegate respondsToSelector:@selector(wordCloudView:didTapWord:atRect:)])
     {
-        [self.delegate wordCloudView:self didTapWord:lastTouchedWord atPoint:lastTouchedPoint];
+        NSValue* value = [wordRects objectForKey:lastTouchedWord];        
+        [self.delegate wordCloudView:self didTapWord:lastTouchedWord atRect:value.CGRectValue];
     }
 }
 
 // if the point is contained within the bounds of a word, save the point and the relevant word.
 // otherwise, return nil to indicate that the point is not contained within this view.
-- (UIView*) hitTest:(CGPoint)point withEvent:(UIEvent *)event
+- (UIView*) hitTest:(CGPoint)point withEvent:(UIEvent*)event
 {
-    for (WCWord* word in self.words)
+    for (NSString* word in wordRects.allKeys)
     {
-        if (CGRectContainsPoint(word.bounds, point))
+        CGRect rect = [[wordRects objectForKey:word] CGRectValue];
+        if (CGRectContainsPoint(rect, point))
         {
-            lastTouchedPoint = point;
             lastTouchedWord = word;
             return self;
         }

@@ -21,6 +21,6 @@
 
 @optional
 
-- (void)wordCloudView:(WCWordCloudView *)wcView didTapWord:(WCWord *)word atPoint:(CGPoint)point;
+- (void) wordCloudView:(WCWordCloudView*)wcView didTapWord:(NSString*)word atRect:(CGRect)rect;
 
 @end
