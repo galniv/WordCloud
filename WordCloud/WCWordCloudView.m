@@ -87,7 +87,7 @@
     for (WCWord* word in self.words)
     {
         float w = word.bounds.size.width * self.scalingFactor;
-        float h = word.bounds.size.height * self.scalingFactor;
+        float h = (word.bounds.size.height/2) * self.scalingFactor; // FIXME: not sure why word height is x2
         float x = self.xShift + word.bounds.origin.x * self.scalingFactor;
         float y =  self.bounds.size.height - (self.yShift + word.bounds.origin.y * self.scalingFactor) - h;
         [wordRects setObject:[NSValue valueWithCGRect:CGRectMake(x, y, w, h)] forKey:word.text];
@@ -115,7 +115,7 @@
     {
         CGContextSelectFont(c, [word.font.fontName cStringUsingEncoding:NSASCIIStringEncoding], word.font.pointSize * self.scalingFactor, kCGEncodingMacRoman);
         CGContextSetFillColorWithColor(c, word.color.CGColor);
-        CGContextShowTextAtPoint(c, self.xShift + word.bounds.origin.x * self.scalingFactor, self.yShift + word.bounds.origin.y * self.scalingFactor, [word.text cStringUsingEncoding:NSASCIIStringEncoding], word.text.length);
+        CGContextShowTextAtPoint(c, self.xShift + word.bounds.origin.x * self.scalingFactor, self.yShift + word.bounds.origin.y * self.scalingFactor, [word.text cStringUsingEncoding:NSUTF8StringEncoding], word.text.length);
     }
 }
 

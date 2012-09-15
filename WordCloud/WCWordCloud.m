@@ -120,19 +120,6 @@
     [self setNeedsGenerateCloud];
 }
 
-/*
-- (void)resetCloud
-{
-    highestWordCount = 0;
-    
-    wordsNeedSorting = FALSE;
-    highestWordCountChanged = FALSE;
-    
-    [wordCounts removeAllObjects];
-    [sortedWords removeAllObjects];
-}
-*/
-
 // private
 - (void) incrementCount:(NSString*)word
 {
@@ -247,8 +234,8 @@
         //}
         
         CGSize wordSize = [word.text sizeWithFont:word.font];
-        wordSize.height += self.wordBorderSize * 2;
-        wordSize.width += self.wordBorderSize * 2;
+        wordSize.height += (self.wordBorderSize * 2);
+        wordSize.width += (self.wordBorderSize * 2);
         
         float horizCenter = (self.cloudSize.width - wordSize.width)/2;
         float vertCenter = (self.cloudSize.height - wordSize.height)/2;
