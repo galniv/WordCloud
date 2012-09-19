@@ -14,6 +14,9 @@
 {
     NSMutableDictionary* wordRects;    
     NSString* lastTouchedWord;
+    
+    UIColor* highlightColor;
+    NSArray* highlightedWords;
 }
 
 @property (nonatomic, retain, readonly) NSArray* words;
@@ -27,10 +30,10 @@
 
 - (void) baseInit
 {
-    //self.layer.masksToBounds = TRUE;
+    self.layer.masksToBounds = TRUE;
     //self.layer.shouldRasterize = YES; // test
     
-    self.backgroundColor = [UIColor clearColor];
+    //self.backgroundColor = [UIColor clearColor];
     _scalingFactor = 1;
     
     _cloud = [[WCWordCloud alloc] init];
@@ -62,6 +65,9 @@
     
     lastTouchedWord = nil;
     wordRects = nil;
+    
+    highlightColor = nil;
+    highlightedWords = nil;
 }
 
 #pragma mark - view lifecycle
@@ -96,14 +102,66 @@
     [self setNeedsDisplay];
 }
 
+#pragma mark - public
+
+- (void) setBorderColor:(UIColor*)borderColor
+{
+    self.layer.borderColor = borderColor.CGColor;
+}
+
+- (UIColor*) borderColor
+{
+    return [UIColor colorWithCGColor:self.layer.borderColor];
+}
+
+- (void) setBorderWidth:(float)borderWidth
+{
+    self.layer.borderWidth = borderWidth;
+}
+
+- (float) borderWidth
+{
+    return self.layer.borderWidth;
+}
+
+- (void) setCornerRadius:(float)cornerRadius
+{
+    self.layer.cornerRadius= cornerRadius;
+}
+
+- (float) cornerRadius
+{
+    return self.layer.cornerRadius;
+}
+
+- (void) highlightWords:(NSArray*)stringWords color:(UIColor*)color
+{
+    highlightColor = color;
+    highlightedWords = [self.words select:^BOOL(WCWord* word)
+    {
+        return [stringWords exists:^BOOL(NSString* stringWord)
+        {
+            return [stringWord.lowercaseString isEqualToString:word.text.lowercaseString];
+        }];
+    }];
+    
+    [self setNeedsDisplay];    
+}
+
+- (void) clearHighlights
+{
+    highlightColor = nil;
+    highlightedWords = nil;
+    
+    [self setNeedsDisplay];
+}
+
 #pragma mark - private
 
 - (void) drawRect:(CGRect)rect
 {
     CGContextRef c = UIGraphicsGetCurrentContext();
-    
-    CGContextClearRect(c, self.frame);
-    
+        
     if (!self.words.count) return;
     
     // set the coordinates for iOS, as seen here:
@@ -111,10 +169,17 @@
     CGContextTranslateCTM(c, 0, self.bounds.size.height);
     CGContextScaleCTM(c, 1, -1);
     
+    CGContextClearRect(c, self.bounds);
+    
+    CGContextSetFillColorWithColor(c, self.backgroundColor.CGColor);
+    CGContextFillRect(c, self.bounds);
+    
     for (WCWord* word in self.words)
     {
+        UIColor* color = [highlightedWords containsObject:word] ? highlightColor : word.color;
+        
         CGContextSelectFont(c, [word.font.fontName cStringUsingEncoding:NSASCIIStringEncoding], word.font.pointSize * self.scalingFactor, kCGEncodingMacRoman);
-        CGContextSetFillColorWithColor(c, word.color.CGColor);
+        CGContextSetFillColorWithColor(c, color.CGColor);
         CGContextShowTextAtPoint(c, self.xShift + word.bounds.origin.x * self.scalingFactor, self.yShift + word.bounds.origin.y * self.scalingFactor, [word.text cStringUsingEncoding:NSUTF8StringEncoding], word.text.length);
     }
 }
