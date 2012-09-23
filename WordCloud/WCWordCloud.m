@@ -37,7 +37,7 @@
     {
         // defaults
         _maxNumberOfWords = 0;
-        _minimumWordLength = 3;
+        _minimumWordLength = 1;
         
         _minFontSize = 10;
         _maxFontSize = 100;
